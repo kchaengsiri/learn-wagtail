@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block extra_css -%}
+  <link rel="stylesheet" type="text/css" href="{{ static('css/news/news_index_page.css') }}">
+{%- endblock %}
+
+{% block body_class -%}
+    template-newsindexpage
+{%- endblock %}
+
+{% block content -%}
+    <h1>{{ page.title }}</h1>
+
+    <div class="intro">{{ page.intro | richtext }}</div>
+
+    <ul class="news-list">
+        {% for post in newspages -%}
+        {%- set post = post.specific -%}
+        {%- set main_image = post.main_image -%}
+        <li class="news-list-item">
+            <h2>
+                <a href="{{ pageurl(post) }}">{{ post.title }}</a>
+            </h2>
+
+            {% if main_image -%}
+                {{ image(main_image, 'fill-100x100') }}
+            {%- endif %}
+
+            <p>{{ post.intro }}</p>
+        </li>
+        {%- endfor %}
+    </ul>
+{%- endblock %}
